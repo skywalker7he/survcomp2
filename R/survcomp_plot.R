@@ -33,7 +33,9 @@
 #' )
 survcomp_plot <- function(dat, patid, f1, f2, dt_start, dt_outcome, dt_end,
                           unit = "month") {
+  # Combine variable names entered
   cols_specified <- c(patid, f1, f2, dt_start, dt_outcome, dt_end)
+  # Select variables based on the names entered
   dat_da <- dat %>% select(
     all_of(cols_specified)
   )
@@ -41,8 +43,14 @@ survcomp_plot <- function(dat, patid, f1, f2, dt_start, dt_outcome, dt_end,
   if (!(length_f1 == 1)) {
     stop("Please enter only one categorical variable name for the argument f1!")
   }
+  # Check whether the categorical variable entered is indeed a factor; if not,
+  # convert it to a factor and make the reference level starting from 0
   if (!is.factor(dat_da[, f1])) {
     dat_da[, f1] <- as.factor(dat_da[, f1] - 1)
+  } else {
+  # If it is a factor, make its reference level starting from 0 by converting it
+  # to numeric first, subtract 1, and then, convert it back to a factor
+    dat_da[, f1] <- as.factor(as.numeric(dat_da[, f1]) - 1)
   }
   length_f2 <- length(f2)
   if (!(length_f2 == 1)) {
@@ -50,6 +58,8 @@ survcomp_plot <- function(dat, patid, f1, f2, dt_start, dt_outcome, dt_end,
   }
   if (!is.factor(dat_da[, f2])) {
     dat_da[, f2] <- as.factor(dat_da[, f2] - 1)
+  } else {
+    dat_da[, f2] <- as.factor(as.numeric(dat_da[, f2]) - 1)
   }
   num_start_date <- length(dt_start)
   if (!(num_start_date == 1)) {
@@ -63,13 +73,20 @@ survcomp_plot <- function(dat, patid, f1, f2, dt_start, dt_outcome, dt_end,
   if (!(num_end_date == 1)) {
     stop("There can only be one column for the date of last follow-up!")
   }
+  # Convert the date variables to a Date type
   dat_da[, dt_start] <- ymd(dat_da[, dt_start])
   dat_da[, dt_outcome] <- ymd(dat_da[, dt_outcome])
   dat_da[, dt_end] <- ymd(dat_da[, dt_end])
+  # Obtain the status from the missingness or nonmissingness of the outcome date variable:
+  # if it is not missing, then the outcome had occured during the study period (status == 1);
+  # otherwise, the subject had been censored (status == 0)
   dat_da$status <- ifelse(!is.na(dat_da[, dt_outcome]), 1, 0)
+  # Combine the dates of the outcome and the dates of last follow-up to
+  # form a vector of status (e.g., death or censored) dates
   dat_da$dt_status <- as.Date(ifelse(dat_da$status == 1,
                                      dat_da[, dt_outcome],
                                      dat_da[, dt_end]))
+  # Calculate the differences between the starting dates and the status dates rowwise
   if (unit == "day") {
     dat_da$time <- as.numeric(difftime(dat_da$dt_status,
                                        dat_da[, dt_start],
@@ -95,6 +112,7 @@ survcomp_plot <- function(dat, patid, f1, f2, dt_start, dt_outcome, dt_end,
                  panel.grid.minor = element_blank(),
                  panel.border = element_blank(),
                  panel.background = element_blank())
+  # Loop over each levels of f2
   for (i in 1:length(f2_levels)) {
     surv_fit_object[[i]] <- surv_fit(survfit_fmla,
                                      data = dat_da[dat_da[, f2] == f2_levels[i],])
@@ -120,5 +138,4 @@ survcomp_plot <- function(dat, patid, f1, f2, dt_start, dt_outcome, dt_end,
   }
   return(arrange_ggsurvplots(surv_curves, print = TRUE,
                              ncol = 1, nrow = length(f2_levels)))
-
 }

@@ -31,7 +31,9 @@
 
 survcomp <- function(dat, patid, x_c, x_n, dt_start, dt_outcome, dt_end,
                      unit = "month") {
+  # Combine variable names entered
   cols_specified <- c(patid, x_c, x_n, dt_start, dt_outcome, dt_end)
+  # Select variables based on the names entered
   dat_da <- dat %>% select(
     all_of(cols_specified)
   )
@@ -50,17 +52,30 @@ survcomp <- function(dat, patid, x_c, x_n, dt_start, dt_outcome, dt_end,
     stop("There can only be one column for the date of last follow-up!")
   }
   for (i in 1:num_categorical) {
+  # Check whether every categorical variable entered is indeed a factor; if not,
+  # convert it to a factor and make the reference level starting from 0
     if (!is.factor(dat_da[, x_c[i]])) {
       dat_da[, x_c[i]] <- as.factor(dat_da[, x_c[i]] - 1)
+    } else {
+  # If it is a factor, make its reference level starting from 0 by converting it
+  # to numeric first, subtract 1, and then, convert it back to a factor
+      dat_da[, x_c[i]] <- as.factor(as.numeric(dat_da[, x_c[i]]) - 1)
     }
   }
+  # Convert the date variables to a Date type
   dat_da[, dt_start] <- ymd(dat_da[, dt_start])
   dat_da[, dt_outcome] <- ymd(dat_da[, dt_outcome])
   dat_da[, dt_end] <- ymd(dat_da[, dt_end])
+  # Obtain the status from the missingness or nonmissingness of the outcome date variable:
+  # if it is not missing, then the outcome had occured during the study period (status == 1);
+  # otherwise, the subject had been censored (status == 0)
   dat_da$status <- ifelse(!is.na(dat_da[, dt_outcome]), 1, 0)
+  # Combine the dates of the outcome and the dates of last follow-up to
+  # form a vector of status (e.g., death or censored) dates
   dat_da$dt_status <- as.Date(ifelse(dat_da$status == 1,
                                      dat_da[, dt_outcome],
                                      dat_da[, dt_end]))
+  # Calculate the differences between the starting dates and the status dates rowwise
   if (unit == "day") {
     dat_da$time <- as.numeric(difftime(dat_da$dt_status,
                                        dat_da[, dt_start],
@@ -76,6 +91,7 @@ survcomp <- function(dat, patid, x_c, x_n, dt_start, dt_outcome, dt_end,
   } else {
     stop("No such a unit of measurement for the time variable!")
   }
+  # Fit a Cox proportional hazards model with interaction of the categorical variables entered
   coxph_fmla <- as.formula(paste("Surv(time, status) ~",
                                  paste(x_c, collapse = "*")))
   coxph_fit <- coxph(coxph_fmla, data = dat_da)

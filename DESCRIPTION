@@ -2,7 +2,7 @@ Package: survcomp2
 Type: Package
 Title: Post-hoc Within Group Comparisons of Differences in a Survival Outcome
 Version: 0.1.0
-Author: Jian He <hej7@vcu.edu>
+Authors@R: person("Jian", "He", email = "hej7@vcu.edu", role = c("auc", "cre"))
 Maintainer: Jian He <hej7@vcu.edu>
 Description: Performs pairwise comparisons of the levels of one categorical variable within each level of another categorical variable adjusting for multiplicity.
 License: GPL-3
