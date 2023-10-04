@@ -18,3 +18,9 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(survcomp2)
 ```
+
+```{r}
+path <- system.file("extdata", "bcsurg.csv", package = "survcomp2")
+dat <- read.csv(path)
+```
+
