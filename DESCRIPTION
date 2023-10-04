@@ -21,5 +21,6 @@ Imports:
     grDevices,
     lubridate,
     stats,
+    survival,
     survminer,
     tidyselect

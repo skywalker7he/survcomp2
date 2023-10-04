@@ -20,6 +20,17 @@
 #' @importFrom ggplot2 theme element_blank element_line
 #' @importFrom survminer surv_fit ggsurvplot arrange_ggsurvplots
 #' @importFrom grDevices rainbow
+#' @importFrom survival Surv
+#'
+#' @examples
+#' # Read in the sample data
+#' path <- system.file("extdata", "bcsurg.csv", package = "survcomp2")
+#' dat <- read.csv(path)
+#' sample_surv_curves <- survcomp_plot(
+#' dat = dat, patid = "ID..", f1 = "Groups",
+#' f2 = "Breast_surgery_code", dt_start = "DT_dxdate2",
+#' dt_outcome = "DT_dod", dt_end = "DT_date_last_seen"
+#' )
 survcomp_plot <- function(dat, patid, f1, f2, dt_start, dt_outcome, dt_end,
                           unit = "month") {
   cols_specified <- c(patid, f1, f2, dt_start, dt_outcome, dt_end)
@@ -89,11 +100,11 @@ survcomp_plot <- function(dat, patid, f1, f2, dt_start, dt_outcome, dt_end,
                                      data = dat_da[dat_da[, f2] == f2_levels[i],])
     surv_curves[[i]] <- ggsurvplot(
       fit = surv_fit_object[[i]],
-      linetype = "strata",
-      risk.table="abs_pct",
-      risk.table.height = 0.30,
-      risk.table.col = "strata",
-      risk.table.fontsize = 3.5,
+      #linetype = "strata",
+      #risk.table="abs_pct",
+      #risk.table.height = 0.30,
+      #risk.table.col = "strata",
+      #risk.table.fontsize = 3.5,
       censor = FALSE,
       ggtheme = theme,
       palette = rainbow(5),
@@ -104,9 +115,10 @@ survcomp_plot <- function(dat, patid, f1, f2, dt_start, dt_outcome, dt_end,
       pval.method = TRUE,
       legend.title = paste(f2, f2_levels[i], sep = " = "),
       legend = "top")
-    surv_curves[[i]]$table <- surv_curves[[i]]$table +
-      theme(axis.line = element_blank())
+    #surv_curves[[i]]$table <- surv_curves[[i]]$table +
+      #theme(axis.line = element_blank())
   }
   return(arrange_ggsurvplots(surv_curves, print = TRUE,
-                             ncol = length(f2_levels), nrow = 1))
+                             ncol = 1, nrow = length(f2_levels)))
+
 }

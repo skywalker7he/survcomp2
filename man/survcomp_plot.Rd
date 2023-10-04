@@ -29,3 +29,13 @@ Multiple Kaplan-Meier plots with a display of the p-values from log-rank tests.
 \description{
 Draws Kaplan-Meier plots of the survival outcome of interest, and compares the levels of one categorical variable within each level of another categorical variable globally via log-rank tests.
 }
+\examples{
+# Read in the sample data
+path <- system.file("extdata", "bcsurg.csv", package = "survcomp2")
+dat <- read.csv(path)
+sample_surv_curves <- survcomp_plot(
+dat = dat, patid = "ID..", f1 = "Groups",
+f2 = "Breast_surgery_code", dt_start = "DT_dxdate2",
+dt_outcome = "DT_dod", dt_end = "DT_date_last_seen"
+)
+}
