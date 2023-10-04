@@ -11,3 +11,15 @@ LazyData: true
 RoxygenNote: 7.2.3
 URL: https://github.com/skywalker7he/survcomp2
 BugReports: https://github.com/skywalker7he/survcomp2/issues
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+Imports: 
+    dplyr,
+    ggplot2,
+    grDevices,
+    lubridate,
+    stats,
+    survminer,
+    tidyselect

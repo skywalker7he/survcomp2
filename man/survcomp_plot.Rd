@@ -7,21 +7,21 @@
 survcomp_plot(dat, patid, f1, f2, dt_start, dt_outcome, dt_end, unit = "month")
 }
 \arguments{
-\item{dat}{a data frame}
+\item{dat}{a data frame.}
 
-\item{patid}{an integer vector of the subject IDs}
+\item{patid}{an integer vector of the subject IDs.}
 
-\item{f1}{the name of the first categorical variable}
+\item{f1}{the name of the first categorical variable.}
 
-\item{f2}{the name of the second categorical variable}
+\item{f2}{the name of the second categorical variable.}
 
-\item{dt_start}{the name of the date of the starting point}
+\item{dt_start}{the name of the date of the starting point.}
 
-\item{dt_outcome}{the name of the date of the survival outcome}
+\item{dt_outcome}{the name of the date of the survival outcome.}
 
-\item{dt_end}{the name of the date of the endpoint}
+\item{dt_end}{the name of the date of the endpoint.}
 
-\item{unit}{the unit of measurement for the time variable; options are: "day", "month", "year"}
+\item{unit}{the unit of measurement for the time variable; options are: "day", "month", "year".}
 }
 \value{
 Multiple Kaplan-Meier plots with a display of the p-values from log-rank tests.
