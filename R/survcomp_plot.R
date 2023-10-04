@@ -20,7 +20,7 @@
 #' @importFrom ggplot2 theme element_blank element_line
 #' @importFrom survminer surv_fit ggsurvplot arrange_ggsurvplots
 #' @importFrom grDevices rainbow
-#' @importFrom survival Surv
+#' @importFrom survival Surv coxph
 #'
 #' @examples
 #' # Read in the sample data
@@ -113,7 +113,7 @@ survcomp_plot <- function(dat, patid, f1, f2, dt_start, dt_outcome, dt_end,
       ylab = "Survival probability",
       pval = TRUE,
       pval.method = TRUE,
-      legend.title = paste(f2, f2_levels[i], sep = " = "),
+      legend.title = paste(f2, f2_levels[i], sep = " == "),
       legend = "top")
     #surv_curves[[i]]$table <- surv_curves[[i]]$table +
       #theme(axis.line = element_blank())

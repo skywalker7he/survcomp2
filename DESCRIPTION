@@ -17,6 +17,7 @@ Suggests:
 VignetteBuilder: knitr
 Imports: 
     dplyr,
+    emmeans,
     ggplot2,
     grDevices,
     lubridate,

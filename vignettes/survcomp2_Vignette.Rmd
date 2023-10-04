@@ -36,5 +36,13 @@ survcomp_plot(dat = dat, patid = "ID..",
               dt_end = "DT_date_last_seen")
 ```
 
+```{r}
+emm_contrasts <- survcomp(dat = dat, patid = "ID..",
+                          x_c = c("Groups", "Breast_surgery_code"),
+                          x_n = "AGE_agedx", dt_start = "DT_dxdate2",
+                          dt_outcome = "DT_dod",
+                          dt_end = "DT_date_last_seen")
+emm_contrasts[emm_contrasts$p.value < 0.05, ]
+```
 
 
