@@ -42,7 +42,26 @@ emm_contrasts <- survcomp(dat = dat, patid = "ID..",
                           x_n = "AGE_agedx", dt_start = "DT_dxdate2",
                           dt_outcome = "DT_dod",
                           dt_end = "DT_date_last_seen")
+```
+
+```{r}
 emm_contrasts[emm_contrasts$p.value < 0.05, ]
 ```
 
+
+```{r}
+pwcomp_output_df <- data.frame(
+  contrast = emm_contrasts$contrast,
+  factor2 = emm_contrasts$Breast_surgery_code,
+  hazard_ratio = round(emm_contrasts$ratio, 3),
+  standard_error = round(emm_contrasts$SE, 3),
+  dof = emm_contrasts$df,
+  #lower_limit = emm_contrasts$asymp.LCL,
+  #upper_limit = emm_contrasts$asymp.UCL,
+  #null_hyp = emm_contrasts$null,
+  #test_stat = emm_contrasts$z.ratio,
+  p = round(emm_contrasts$p.value, 3)
+)
+pwcomp_output_df
+```
 
