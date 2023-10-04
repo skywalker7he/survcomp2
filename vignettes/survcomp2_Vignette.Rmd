@@ -19,15 +19,33 @@ knitr::opts_chunk$set(
 library(survcomp2)
 ```
 
+## Import the data
 ```{r}
 path <- system.file("extdata", "bcsurg.csv", package = "survcomp2")
 dat <- read.csv(path)
 ```
 
+## Introduction to the data
+
+* The dataset consist of `r nrow(dat)` observations and `r ncol(dat)` variables.
+* The data were extracted from the hospital electronic health records and cancer registry.
+* The data contain patients' demographic and clinical characteristics and treatment information.
+* The main variable of interest is `Groups`, which encompasses `r length(unique(dat$Groups))` subgroups of breast cancer patients; they are: Luminal A (0), Luminal B (1), Triple Negative (2), Her2 Enriched (3), and Triple Positive (4). 
+* Another variable of interest is `Breast_surgery_code` and it has two levels: segmental mastectomy (0) and simple mastectomy (1).
+* For easier model interpretation, note that the codes in the parentheses correspond to the levels showed in the analysis outputs below, which is different from the coding used in the data.
+
 ```{r}
 str(dat)
 ```
+## Research Questions
+1. Is overall survival different among subgroups of breast cancer survivors within each level of surgery types, i.e., segmental (**0**) vs simple mastectomy (**1**)? 
+2. If so, how does overall survival differ between subgroups of breast cancer survivors within each level of surgery types?
 
+## Analysis Plan
+We plan to first plot the Kaplan-Meier survival curves stratified by the subgroups of patients within each level of surgery types, and perform global log-rank tests to see if there is at least one subgroup of patients whose overall survival is different from the others. If we have enough evidence to reject the null hypothesis of the global log-rank test; that is, there is no difference in overall survival among subgroups of breast cancer survivors, then we can perform post-hoc pairwise comparisons within each level of surgery types adjusting for multiplicity to find out which pair of subgroups is different.
+
+## Analysis Results
+### Kaplan-Meier Plots
 ```{r fig.height=12.5, fig.width=7.03, fig.align="center"}
 survcomp_plot(dat = dat, patid = "ID..", 
               f1 = "Groups", f2 = "Breast_surgery_code",
@@ -35,7 +53,7 @@ survcomp_plot(dat = dat, patid = "ID..",
               dt_outcome = "DT_dod", 
               dt_end = "DT_date_last_seen")
 ```
-
+We have enough evidence to reject the null hypothesis of the global log-rank test. We shall proceed.
 ```{r}
 emm_contrasts <- survcomp(dat = dat, patid = "ID..",
                           x_c = c("Groups", "Breast_surgery_code"),
@@ -44,10 +62,12 @@ emm_contrasts <- survcomp(dat = dat, patid = "ID..",
                           dt_end = "DT_date_last_seen")
 ```
 
+### Pairwise Comparisons
 ```{r}
 emm_contrasts[emm_contrasts$p.value < 0.05, ]
 ```
-
+* For those had undergone segmental mastectomy, there was statistically discernible difference in overall survival between Luminal A and Triple Negative cohorts.
+* For those had undergone simple mastectomy, there were statistically discernible differences in overall survival between Luminal A and Triple Negative cohorts, and between Triple Negative and Triple Postive cohorts.
 
 ```{r}
 pwcomp_output_df <- data.frame(
