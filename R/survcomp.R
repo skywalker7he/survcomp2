@@ -17,10 +17,9 @@
 #'
 #' @examples
 #' # Read in the sample data
-#' path <- system.file("extdata", "bcsurg.csv", package = "survcomp2")
-#' dat <- read.csv(path)
+#' data(bcsurg)
 #' emm_contrasts <- survcomp(
-#' dat = dat, patid = "ID..",
+#' dat = bcsurg, patid = "ID..",
 #' x_c = c("Groups", "Breast_surgery_code"),
 #' x_n = "AGE_agedx", dt_start = "DT_dxdate2",
 #' dt_outcome = "DT_dod",
@@ -34,9 +33,7 @@ survcomp <- function(dat, patid, x_c, x_n, dt_start, dt_outcome, dt_end,
   # Combine variable names entered
   cols_specified <- c(patid, x_c, x_n, dt_start, dt_outcome, dt_end)
   # Select variables based on the names entered
-  dat_da <- dat %>% select(
-    all_of(cols_specified)
-  )
+  dat_da <- dat[, cols_specified]
   num_categorical <- length(x_c)
   num_numeric <- length(x_n)
   num_start_date <- length(dt_start)

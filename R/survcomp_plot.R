@@ -13,8 +13,7 @@
 #' @return Multiple Kaplan-Meier plots with a display of the p-values from log-rank tests.
 #' @export
 #'
-#' @importFrom tidyselect all_of
-#' @importFrom dplyr %>% select
+#' @importFrom dplyr %>%
 #' @importFrom lubridate ymd
 #' @importFrom stats as.formula
 #' @importFrom ggplot2 theme element_blank element_line
@@ -24,10 +23,9 @@
 #'
 #' @examples
 #' # Read in the sample data
-#' path <- system.file("extdata", "bcsurg.csv", package = "survcomp2")
-#' dat <- read.csv(path)
+#' data(bcsurg)
 #' sample_surv_curves <- survcomp_plot(
-#' dat = dat, patid = "ID..", f1 = "Groups",
+#' dat = bcsurg, patid = "ID..", f1 = "Groups",
 #' f2 = "Breast_surgery_code", dt_start = "DT_dxdate2",
 #' dt_outcome = "DT_dod", dt_end = "DT_date_last_seen"
 #' )
@@ -36,9 +34,7 @@ survcomp_plot <- function(dat, patid, f1, f2, dt_start, dt_outcome, dt_end,
   # Combine variable names entered
   cols_specified <- c(patid, f1, f2, dt_start, dt_outcome, dt_end)
   # Select variables based on the names entered
-  dat_da <- dat %>% select(
-    all_of(cols_specified)
-  )
+  dat_da <- dat[, cols_specified]
   length_f1 <- length(f1)
   if (!(length_f1 == 1)) {
     stop("Please enter only one categorical variable name for the argument f1!")

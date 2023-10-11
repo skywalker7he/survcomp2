@@ -16,7 +16,6 @@ Suggests:
     rmarkdown
 VignetteBuilder: knitr
 Imports: 
-    dplyr,
     emmeans,
     ggplot2,
     grDevices,
@@ -24,4 +23,6 @@ Imports:
     stats,
     survival,
     survminer,
-    tidyselect
+    dplyr
+Depends: 
+    R (>= 2.10)

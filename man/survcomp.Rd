@@ -31,10 +31,9 @@ Performs pairwise comparisons of the levels of one categorical variable within e
 }
 \examples{
 # Read in the sample data
-path <- system.file("extdata", "bcsurg.csv", package = "survcomp2")
-dat <- read.csv(path)
+data(bcsurg)
 emm_contrasts <- survcomp(
-dat = dat, patid = "ID..",
+dat = bcsurg, patid = "ID..",
 x_c = c("Groups", "Breast_surgery_code"),
 x_n = "AGE_agedx", dt_start = "DT_dxdate2",
 dt_outcome = "DT_dod",
