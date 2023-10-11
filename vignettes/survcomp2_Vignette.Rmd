@@ -21,20 +21,20 @@ library(survcomp2)
 
 ## Import the data
 ```{r}
-data(bcsurg)
+data(dat_da)
 ```
 
 ## Introduction to the data
 
-* The dataset consist of `r nrow(bcsurg)` observations and `r ncol(bcsurg)` variables.
+* The dataset consist of `r nrow(dat_da)` observations and `r ncol(dat_da)` variables.
 * The data were extracted from the hospital electronic health records and cancer registry.
 * The data contain patients' demographic and clinical characteristics and treatment information.
-* The main variable of interest is `Groups`, which encompasses `r length(unique(bcsurg$Groups))` subgroups of breast cancer patients; they are: Luminal A (0), Luminal B (1), Triple Negative (2), Her2 Enriched (3), and Triple Positive (4). 
+* The main variable of interest is `Groups`, which encompasses `r length(unique(dat_da$Groups))` subgroups of breast cancer patients; they are: Luminal A (0), Luminal B (1), Triple Negative (2), Her2 Enriched (3), and Triple Positive (4). 
 * Another variable of interest is `Breast_surgery_code` and it has two levels: segmental mastectomy (0) and simple mastectomy (1).
 * For easier model interpretation, note that the codes in the parentheses correspond to the levels showed in the analysis outputs below, which is different from the coding used in the data.
 
 ```{r}
-str(bcsurg)
+str(dat_da)
 ```
 ## Research Questions
 1. Is overall survival different among subgroups of breast cancer survivors within each level of surgery types, i.e., segmental (**0**) vs simple mastectomy (**1**)? 
@@ -46,7 +46,7 @@ We plan to first plot the Kaplan-Meier survival curves stratified by the subgrou
 ## Analysis Results
 ### Kaplan-Meier Plots
 ```{r fig.height=12.5, fig.width=7.03, fig.align="center"}
-survcomp_plot(dat = bcsurg, patid = "ID..", 
+survcomp_plot(dat = dat_da, patid = "ID..", 
               f1 = "Groups", f2 = "Breast_surgery_code",
               dt_start = "DT_dxdate2",
               dt_outcome = "DT_dod", 
@@ -54,7 +54,7 @@ survcomp_plot(dat = bcsurg, patid = "ID..",
 ```
 We have enough evidence to reject the null hypothesis of the global log-rank test. We shall proceed.
 ```{r}
-emm_contrasts <- survcomp(dat = bcsurg, patid = "ID..",
+emm_contrasts <- survcomp(dat = dat_da, patid = "ID..",
                           x_c = c("Groups", "Breast_surgery_code"),
                           x_n = "AGE_agedx", dt_start = "DT_dxdate2",
                           dt_outcome = "DT_dod",

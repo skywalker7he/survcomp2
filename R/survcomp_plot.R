@@ -23,9 +23,9 @@
 #'
 #' @examples
 #' # Read in the sample data
-#' data(bcsurg)
+#' data(dat_da)
 #' sample_surv_curves <- survcomp_plot(
-#' dat = bcsurg, patid = "ID..", f1 = "Groups",
+#' dat = dat_da, patid = "ID..", f1 = "Groups",
 #' f2 = "Breast_surgery_code", dt_start = "DT_dxdate2",
 #' dt_outcome = "DT_dod", dt_end = "DT_date_last_seen"
 #' )
