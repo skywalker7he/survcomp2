@@ -71,7 +71,8 @@ survcomp <- function(dat, patid, x_c, x_n, dt_start, dt_outcome, dt_end,
   # form a vector of status (e.g., death or censored) dates
   dat_da$dt_status <- as.Date(ifelse(dat_da$status == 1,
                                      dat_da[, dt_outcome],
-                                     dat_da[, dt_end]))
+                                     dat_da[, dt_end]),
+                              origin = "1970-01-01")
   # Calculate the differences between the starting dates and the status dates rowwise
   if (unit == "day") {
     dat_da$time <- as.numeric(difftime(dat_da$dt_status,
