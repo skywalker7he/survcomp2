@@ -5,9 +5,14 @@
 \alias{dat_da}
 \title{Data to showcase differences in overall survival among subgroups of breast cancer survivors}
 \format{
-A data frame with 1598 rows and 7 variables
+A data frame with 1598 rows and 12 variables
  \describe{
-.     \item{ID..}{Subject ID}
+     \item{ID..}{Subject ID}
+     \item{pts_sex}{Patient sex}
+     \item{race}{Race}
+     \item{ER}{ER status}
+     \item{PR}{PR status}
+     \item{HER2}{Her2 status}
      \item{Groups}{5 groups of breast cancer}
      \item{Breast_surgery_code}{Surgery type}
      \item{AGE_agedx}{Age at cancer diagnosis}

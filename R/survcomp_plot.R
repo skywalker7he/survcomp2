@@ -130,7 +130,7 @@ survcomp_plot <- function(dat, patid, f1, f2, dt_start, dt_outcome, dt_end,
       pval.method = TRUE,
       legend.title = paste(f2, f2_levels[i], sep = " == "),
       legend = "top")
-    #surv_curves[[i]]$table <- surv_curves[[i]]$table +
+      #surv_curves[[i]]$table <- surv_curves[[i]]$table +
       #theme(axis.line = element_blank())
   }
   return(arrange_ggsurvplots(surv_curves, print = TRUE,
