@@ -114,7 +114,7 @@ survcomp_plot <- function(dat, patid, f1, f2, dt_start, dt_outcome, dt_end,
                                      data = dat_da[dat_da[, f2] == f2_levels[i],])
     surv_curves[[i]] <- ggsurvplot(
       fit = surv_fit_object[[i]],
-      #linetype = "strata",
+      linetype = "strata",
       #risk.table="abs_pct",
       #risk.table.height = 0.30,
       #risk.table.col = "strata",
