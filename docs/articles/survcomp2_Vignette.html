@@ -90,7 +90,7 @@
 <h2 id="introduction-to-the-data">Introduction to the data<a class="anchor" aria-label="anchor" href="#introduction-to-the-data"></a>
 </h2>
 <ul>
-<li>The dataset consist of 1598 observations and 7 variables.</li>
+<li>The dataset consist of 1598 observations and 12 variables.</li>
 <li>The data were extracted from the hospital electronic health records
 and cancer registry.</li>
 <li>The data contain patients’ demographic and clinical characteristics
@@ -108,12 +108,17 @@ below, which is different from the coding used in the data.</li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">dat_da</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'data.frame':    1598 obs. of  7 variables:</span></span>
+<span><span class="co">#&gt; 'data.frame':    1598 obs. of  12 variables:</span></span>
 <span><span class="co">#&gt;  $ ID..               : int  1 3 4 5 6 7 8 9 10 12 ...</span></span>
-<span><span class="co">#&gt;  $ Groups             : int  4 2 3 4 2 3 5 1 1 2 ...</span></span>
-<span><span class="co">#&gt;  $ Breast_surgery_code: int  2 1 2 2 2 1 2 2 1 2 ...</span></span>
+<span><span class="co">#&gt;  $ pts_sex            : int  1 1 1 1 1 1 1 1 1 1 ...</span></span>
+<span><span class="co">#&gt;  $ race               : int  1 1 1 0 0 0 1 1 1 1 ...</span></span>
 <span><span class="co">#&gt;  $ AGE_agedx          : int  49 63 61 61 37 73 68 59 62 51 ...</span></span>
 <span><span class="co">#&gt;  $ DT_dxdate2         : chr  "2010-03-03" "2018-04-25" "2009-09-29" "2017-07-21" ...</span></span>
+<span><span class="co">#&gt;  $ ER                 : int  0 1 0 0 1 0 1 1 1 1 ...</span></span>
+<span><span class="co">#&gt;  $ PR                 : int  0 1 0 0 1 0 1 1 1 1 ...</span></span>
+<span><span class="co">#&gt;  $ HER2               : int  1 0 0 1 0 0 1 0 0 0 ...</span></span>
+<span><span class="co">#&gt;  $ Groups             : int  4 2 3 4 2 3 5 1 1 2 ...</span></span>
+<span><span class="co">#&gt;  $ Breast_surgery_code: int  2 1 2 2 2 1 2 2 1 2 ...</span></span>
 <span><span class="co">#&gt;  $ DT_dod             : chr  "2019-07-10" NA NA NA ...</span></span>
 <span><span class="co">#&gt;  $ DT_date_last_seen  : chr  "2015-09-15" "2019-05-29" "2016-02-29" "2021-11-04" ...</span></span></code></pre></div>
 </div>

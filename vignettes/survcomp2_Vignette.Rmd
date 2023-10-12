@@ -3,7 +3,7 @@ title: "Introduction to the survcomp2 Package"
 author: "Jian He"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{"Introduction to the survcomp2 Package"}
+  %\VignetteIndexEntry{Introduction to the survcomp2 Package}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
